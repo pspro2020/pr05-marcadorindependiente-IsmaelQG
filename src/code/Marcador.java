@@ -48,37 +48,9 @@ public class Marcador {
 	}
 	
 	public void increment() {
-		switch(ThreadLocalRandom.current().nextInt(1,7)) {
-		case 1:
-			synchronized(diceLock[0]){
-				marcador[0]++;
-			}
-			break;
-		case 2:
-			synchronized(diceLock[1]){
-				marcador[1]++;
-			}
-			break;
-		case 3:
-			synchronized(diceLock[2]){
-				marcador[2]++;
-			}
-			break;
-		case 4:
-			synchronized(diceLock[3]){
-				marcador[3]++;
-			}
-			break;
-		case 5:
-			synchronized(diceLock[4]){
-				marcador[4]++;
-			}
-			break;
-		case 6:
-			synchronized(diceLock[5]){
-				marcador[5]++;
-			}
-			break;
+		int random = ThreadLocalRandom.current().nextInt(1,7);
+		synchronized(diceLock[random-1]) {
+			marcador[random-1]++;
 		}
 	}
 
