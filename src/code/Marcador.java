@@ -1,38 +1,20 @@
 package code;
 
-import java.util.ArrayList;
 import java.util.concurrent.ThreadLocalRandom;
 
 public class Marcador {
 	
 	private int[] marcador = new int[6];
 	private Object[] diceLock = new Object[6];
+	int total = 0;
 	
-	public Marcador(int n) {
-		final MyThreadFactory threadFactory = new MyThreadFactory("MyThreadFactory");
-		ArrayList<Thread> threads = new ArrayList<>();
-		
+	public Marcador() {
 		for(int i = 0; i <= 5; i++) {
 			diceLock[i] = new Object();
 		}
-		
-		for(int i = 0; i < n; i++) {
-			Thread thread = threadFactory.newThread(new Dice(this));
-			threads.add(thread);
-			thread.start();
-		}
-		
-		for (Thread thread : threads) {
-            try {
-                thread.join();
-            }
-            catch (InterruptedException exception) {
-                return;
-            }
-		}
-		
-		int total = 0;
-				
+	}
+	
+	public void showResults() {
 		for(int m: marcador) {
 			total += m;
 		}
@@ -48,9 +30,9 @@ public class Marcador {
 	}
 	
 	public void increment() {
-		int random = ThreadLocalRandom.current().nextInt(1,7);
-		synchronized(diceLock[random-1]) {
-			marcador[random-1]++;
+		int random = ThreadLocalRandom.current().nextInt(0,6);
+		synchronized(diceLock[random]) {
+			marcador[random]++;
 		}
 	}
 
